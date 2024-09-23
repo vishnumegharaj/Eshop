@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // Configure CORS to allow requests from http://localhost:3000
 app.use(cors({
     origin: 'https://eshop-ncea.onrender.com/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],    
     credentials: true,
 }));
 
