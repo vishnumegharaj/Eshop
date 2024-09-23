@@ -18,11 +18,20 @@ app.use(express.json()); // To parse JSON payloads
 app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS to allow requests from http://localhost:3000
+// Configure CORS to allow requests from http://localhost:3000 and your production URL
 app.use(cors({
-    origin: 'https://eshop-ncea.onrender.com',
+    origin: function (origin, callback) {
+        // Allow requests from localhost and your production URL
+        if (origin === 'http://localhost:3000' || origin === 'https://eshop-ncea.onrender.com' || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],    
     credentials: true,
 }));
+
 
 
 const productsrouter = require('./router/products.router');
