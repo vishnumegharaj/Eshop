@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Teko:wght@300..700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    position: sticky; /* This will make the header stay fixed at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    background:linear-gradient(to right, var(--primary-color), var(--secondary-color));; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    height: 60px;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays above other elements */
+}
+
+.logo {
+    color: #E4E4E4;
+    font-size: 34px;
+    font-weight: bold;
+    font-family: "Teko", sans-serif;
+    font-optical-sizing: auto;
+    font-style: italic;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    background-color: var(--primary-color); /* Changed background to a solid color */
+    text-align: center;
+    margin: 5px;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    transform: scale(1.05);
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}

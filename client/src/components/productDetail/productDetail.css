@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap');
+
+
+.center{
+    height: 90vh;
+    background-color: rgba(206, 206, 206, 0.223);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cart{
+    background-color: white;
+    font-family: "El Messiri", sans-serif;
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: center;
+    margin: 20px;
+    padding-right: 50px;
+    height: auto;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); 
+}
+
+.cart-image{
+    border: 3px solid whitesmoke;
+    height: 400px;
+    min-height: 100px;
+    margin-right: 0%;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.space-inBetween{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 0%;
+    margin: 20px;
+}
+.purchaseCount{
+    cursor: pointer;
+    padding: 0%;
+    margin: 0%;
+    display: flex;
+    align-items: center;
+    font-size: x-large;
+}
+.order-btn{
+    padding: 10px 35px;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    width: 400px;
+    border: 0cap;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+} 
+.button:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-color); /* Darker shade on hover */
+}
+
+
+@media screen and (max-width: 600px)  {
+    .cart{
+        margin: 0%;
+        padding: 10px;
+        width: 100vw;
+        flex-wrap: wrap;
+    }
+    .cart-image{
+       
+        height: 65vw;
+        
+        
+    }
+}

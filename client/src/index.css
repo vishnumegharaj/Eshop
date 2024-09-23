@@ -1,0 +1,25 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+:root {
+  --primary-color: #7717d1;
+  --secondary-color: #d2247b;
+  --text-color: #333;
+  --background-color: #fff;
+  --gradient: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+body {
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

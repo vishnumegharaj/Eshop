@@ -1,0 +1,140 @@
+.container-parent{
+    display: flex;
+    justify-content:space-around;
+    margin: 20px;
+    width: 90%;
+}
+.cart-container{
+} 
+.cart-details{
+    background-color: white;
+    padding: 20px;
+    text-align: left;
+    margin: 20px;
+    border: 1px solid rgb(231, 231, 231);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 400px;
+}
+
+.image{
+    height: 100px;
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+    margin: 2px;
+}
+.icons {
+    display: flex;
+    align-items: center; /* This will vertically center the items */
+    margin-right: 100px;
+}
+.icons h3 {
+    margin: 0 8px; /* Adjust this value as needed */
+     /* This can help if the text is slightly off */
+}
+.description h3{
+    
+    margin: 0px;
+    padding: 0%;
+}
+.color{
+    color: var(--primary-color);
+}
+.description{
+    margin: 9px;
+}
+
+.buy-button{ /* Changed background to a solid color */
+    text-align: center;
+    margin: 5px;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cart-summary {
+    width: 350px;
+    height: fit-content;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.summary-title {
+    font-size: 1.25rem;
+    color: #8a2be2;
+    margin-bottom: 1rem;
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+}
+.summary-total {
+    font-weight: bold;
+    color: #8a2be2;
+}
+.checkout-button {
+    width: 100%;
+    color: white;
+    background-color: var(--primary-color); /* Use primary color */
+    font-weight: bold;
+    font-size: large;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.checkout-button:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-color); /* Darker shade on hover */
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 3rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.empty-cart-icon {
+    width: 64px;
+    height: 64px;
+    color: #8a2be2;
+    margin-bottom: 1rem;
+}
+.empty-cart h2 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+.empty-cart p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .container-parent{
+        display: flex;
+        flex-wrap: wrap-reverse;
+        text-align: center;
+        width: 100%;
+        margin: 0px;
+        padding: 0%;
+    }
+    .cart-details{
+        margin: 20px 0px;
+        width: 350px;
+    }
+    .cart-container{
+        margin: 0%;
+        padding: 0%;
+    }
+}

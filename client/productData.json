@@ -1,0 +1,102 @@
+[
+    {
+      "name": "Tata nexon car cover",
+      "category": "Vehicle Service Type",
+      "manufacturer": "PROTEGO",
+      "description": "cover",
+      "price": 1000,
+      "imageURL": "https://m.media-amazon.com/images/I/410hH9JqKUL._SX679_.jpg",
+      "availableItems": 10000
+    },
+    {
+      "name": "Rolls Royce",
+      "category": "Vehicles",
+      "manufacturer": "Car",
+      "description": "for long rides",
+      "price": 16000000,
+      "imageURL": "https://www.carandbike.com/_next/image?url=https%3A%2F%2Fc.ndtvimg.com%2F2022-01%2F0d2m0qkg_car_625x300_12_January_22.jpg&w=1920&q=75",
+      "availableItems": 144211
+    },
+    {
+      "name": "Xbox series X",
+      "category": "Electronics",
+      "manufacturer": "Microsoft",
+      "description": "Xbox Console",
+      "price": 129999,
+      "imageURL": "https://m.media-amazon.com/images/I/31HMjW7eTEL._SX300_SY300_QL70_FMwebp_.jpg",
+      "availableItems": 999981
+    },
+    {
+      "name": "Macbook",
+      "category": "Electronics",
+      "manufacturer": "Apple",
+      "description": "Apple 2023 MacBook Pro (14-inch, M3 chip with 8‑core CPU and 10‑core GPU, 8GB Unified Memory, 512GB) - Silver",
+      "price": 159999,
+      "imageURL": "https://m.media-amazon.com/images/I/31PGPjaOAZL._SY445_SX342_QL70_FMwebp_.jpg",
+      "availableItems": 9974
+    },
+    {
+      "name": "Puma Shoes",
+      "category": "Footwear",
+      "manufacturer": "Puma",
+      "description": "Puma comfort",
+      "price": 100011,
+      "imageURL": "https://m.media-amazon.com/images/I/61t6YXjiJCL._SY695_.jpg",
+      "availableItems": 123
+    },
+    {
+      "name": "Fox's Candy",
+      "category": "Food",
+      "manufacturer": "Fox's",
+      "description": "Fox candy",
+      "price": 50,
+      "imageURL": "https://m.media-amazon.com/images/I/6100F8H5mXS._SX679_.jpg",
+      "availableItems": 99
+    },
+    {
+      "name": "Dell Laptop ",
+      "category": "Electronics",
+      "manufacturer": "Dell",
+      "description": "Windows Laptop",
+      "price": 10000,
+      "imageURL": "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/inspiron-notebooks/15-3520/media-gallery/in3520-xnb-01-sl.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=402&qlt=100,1&resMode=sharp2&size=402,402&chrss=full",
+      "availableItems": 990
+    },
+    {
+        "name": "Galaxy S23 Ultra 5G",
+        "category": "Electronics",
+        "manufacturer": "Samsung",
+        "description": "8 GB RAM | 128 GB ROM",
+        "price": 109999,
+        "imageURL": "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/i/5/1/-original-imagzm8pvabtmeys.jpeg?q=70",
+        "availableItems": 990
+    },
+    {
+        "name": "Galaxy Z Flip3 5G ",
+        "category": "Electronics",
+        "manufacturer": "Samsung",
+        "description": "8 GB RAM | 128 GB ROM",
+        "price": 38999,
+        "imageURL": "https://rukminim2.flixcart.com/image/612/612/ksnjp8w0/mobile/w/u/8/galaxy-z-flip3-5g-sm-f711bzeeinu-samsung-original-imag662adrayy6cg.jpeg?q=70",
+        "availableItems": 990
+    },
+    {
+        "name": "SAMSUNG GT 1200",
+        "category": "Electronics",
+        "manufacturer": "Samsung",
+        "description": "GT 1200 R/I/M",
+        "price": 1125,
+        "imageURL": "https://rukminim2.flixcart.com/image/612/612/xif0q/mobile/q/2/6/gt-1200-r-i-m-na-samsung-original-imagzh9xn9gdekyz.jpeg?q=70",
+        "availableItems": 10
+    },
+    {
+        "name": "Electric Iron",
+        "category": "Electronics",
+        "manufacturer": "Orient",
+        "description": " Non-Stick German Weilburger Coated",
+        "price": 999,
+        "imageURL": "https://rukminim2.flixcart.com/image/612/612/xif0q/iron/d/t/v/-original-imagv56nnzdukzxk.jpeg?q=70",
+        "availableItems": 90
+    }
+
+  ]
