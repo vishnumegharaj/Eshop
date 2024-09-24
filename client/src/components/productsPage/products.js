@@ -49,9 +49,10 @@ export default function Products() {
     const loadCategories = async () => {
         console.log("fetching categories from server");
         try {
-            const response = await fetch("http://localhost:8085/api/products/category", {
+            const response = await fetch(API+"/api/products/category", {
                 method: 'GET',
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': token
                 }
             });
