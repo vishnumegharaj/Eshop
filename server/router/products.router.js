@@ -4,7 +4,7 @@ const authorize = require('../middleware/auth')
 
 const {getProducts, getProductById, getProductCategory} = require('../controllers/products.controller')
 
-router.get('/category', getProductCategory);
+router.get('/category',authorize, getProductCategory);
 router.get('/:id', getProductById );
 router.get('/', authorize, getProducts);
 
