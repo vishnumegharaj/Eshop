@@ -50,8 +50,6 @@ const db = require('./config/db.config');
 db.mongoose.connect(process.env.mongoURL, {
     useNewUrlParser: true,
   useUnifiedTopology: true,
-  keepAlive: true,
-  keepAliveInitialDelay: 300000
     
 })
     .then(() => {
