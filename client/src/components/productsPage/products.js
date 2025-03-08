@@ -102,7 +102,7 @@ export default function Products() {
     };
 
     return (
-        <div className=" my-8 px-10 bg-color">
+        <div className=" p-10 bg-color">
             <div className="relative">
                 <div className="absolute inset-0">
                     <img
