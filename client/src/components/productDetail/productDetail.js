@@ -7,7 +7,7 @@ import "./productDetail.css";
 export default function ProductDetail() {
     const { productId } = useParams();
     const cart = useSelector(state => state.cart);
-    const isInCart = cart.find( item => item.id === productId )
+    const isInCart = cart?.find( item => item.id === productId )
     const API = process.env.REACT_APP_API;
 
     const dispatch = useDispatch();

@@ -9,6 +9,7 @@ import Login from './components/login-signup/login';
 import CreateOrder from './components/createOrder.js/createOrder';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 import './App.css';
 
 
@@ -31,7 +32,7 @@ function App() {
         </Routes>
       </Router>
 
-
+      <Toaster />
     </div>
   );
 }

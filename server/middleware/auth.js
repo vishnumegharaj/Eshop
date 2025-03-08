@@ -6,8 +6,7 @@ const auth = (req, res, next) => {
 
     if (!token) {
         console.log("unauthorised");
-        return res.status(401).send("Unauthorized, please login first");
-        
+        return res.status(401).send("Unauthorized, please login first"); 
     }
 
     try {

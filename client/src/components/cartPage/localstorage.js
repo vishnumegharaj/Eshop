@@ -1,14 +1,17 @@
-export const loadState = () => {
+import { getCart } from "../../api/cart";
+
+export const loadState = async () => {
     try {
-        const serializedState = localStorage.getItem('cart');
-        if (serializedState === null) {
-            return undefined;
-        }
-        return JSON.parse(serializedState);
+        console.log("inside loadState function");
+        const serializedState = await getCart(); // Wait for the API response
+        console.log("serializedState", serializedState);
+        return serializedState || undefined; 
     } catch (err) {
+        console.error("Error loading state:", err);
         return undefined;
     }
 };
+
 
 export const saveState = (state) => {
     try {

@@ -1,66 +1,60 @@
 require('dotenv').config();
 
-
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-
 
 const app = express();
-const port = 8085;
+const PORT = process.env.PORT || 8085;
 
-const User = require('./models/users.models');
-const authorize = require('./middleware/auth');
+// Import database configuration
+const db = require('./config/db.config');
 
-// Middleware
-app.use(express.json()); // To parse JSON payloads
-app.use(express.urlencoded({ extended: true }));
-
-// Configure CORS to allow requests from http://localhost:3000
-// Configure CORS to allow requests from http://localhost:3000 and your production URL
-app.use(cors({
-    origin: '*', // Allow all origins for testing
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-}));
-
-app.options('*', cors()); // enable pre-flight across-the-board
-
-
-
+// Import routers
 const productsrouter = require('./router/products.router');
 const userrouter = require('./router/users.router');
-const addressrouter = require('./router/address.router');
+const cartrouter = require('./router/cart.router');
 
-app.use("/api/products", productsrouter);
-app.use("/api/auth", userrouter);
-// app.use("/api/address", addressrouter); define this later
+// Middleware
+app.use(express.json()); // Parse JSON payloads
+app.use(express.urlencoded({ extended: true }));
 
+// Configure CORS
+app.use(
+    cors({
+        origin: '*', // Change this in production for security
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true,
+    })
+);
+
+app.options('*', cors()); // Enable pre-flight for all routes
 
 // Routes
+app.use("/api/products", productsrouter);
+app.use("/api/auth", userrouter);
+app.use("/api/cart", cartrouter);
+
 app.get('/', (req, res) => {
-    res.send("this is products page");
+    res.send("This is the products page.");
 });
 
+// Check if MongoDB URL is defined
+if (!process.env.mongoURL) {
+    console.error("Error: mongoURL is not defined in .env");
+    process.exit(1);
+}
 
-
-// Connection to database
-const db = require('./config/db.config');
-db.mongoose.connect(process.env.mongoURL, {
-    useNewUrlParser: true,
-  useUnifiedTopology: true,
-    
-})
+// Connect to the database
+db.mongoose
+    .connect(process.env.mongoURL)
     .then(() => {
         console.log("Connected to the database!");
-        console.log()
+        // Start server after successful DB connection
+        app.listen(PORT, () => {
+            console.log(`Server listening on port ${PORT}`);
+        });
     })
-    .catch(err => {
-        console.log("Cannot connect to the database!", err);
-        process.exit();
+    .catch((err) => {
+        console.error("Cannot connect to the database!", err);
+        process.exit(1);
     });
-
-app.listen(port, () => {
-    console.log("server listening on port " + port);
-});

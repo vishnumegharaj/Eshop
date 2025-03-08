@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Teko:wght@300..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Teko:wght@300..700&display=swap');
 
 .parent-container {
     background-color: var(--background-color);
@@ -32,14 +32,14 @@
 .toggle-button-group {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row; /* Stack buttons vertically */
+    flex-direction: row;
     gap: 8px;
     margin: 20px 0;
     align-items: center;
     justify-content: center;
 }
 
-.toggle-button { /* Use primary color */
+.toggle-button { 
     color: black;
     padding: 10px 15px;
     border: none;
@@ -60,7 +60,7 @@
 
 
 .toggle-button.active {
-    background-color: var(--secondary-color); /* Darker shade for the active button */
+    background-color: var(--secondary-color); 
 }
 
 .product-container {
@@ -108,7 +108,7 @@
 }
 
 .button {
-    background-color: var(--primary-color); /* Use primary color */
+    background-color: var(--primary-color);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -118,8 +118,8 @@
 }
 
 .button:hover {
-    background-color: var(--primary-color); /* Darker shade on hover */
-}
+    background-color: var(--primary-color);
+} */
 
 /* Hide toggle buttons on larger screens */
 

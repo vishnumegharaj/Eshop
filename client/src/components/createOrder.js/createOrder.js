@@ -16,7 +16,7 @@ export default function CreateOrder() {
   const cart = useSelector((state) => state.cart);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
-  const totalAmount = cart.reduce((acc, item) => acc + item.price * item.count, 0);
+  const totalAmount = cart?.reduce((acc, item) => acc + item.cartItems.price * item.cartItems.quantity, 0);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -118,16 +118,16 @@ export default function CreateOrder() {
             <div className="end">
               <div className="flex">
                 <div>
-                  <img src={item.imageURL} alt="" className="image" />
+                  <img src={item.productDetails.imageURL} alt="" className="image" />
                 </div>
                 <div className="description">
-                  <h3>{item.name}</h3>
-                  <p>${item.price} x {item.count}</p>
+                  <h3>{item.productDetails.name}</h3>
+                  <p>${item.productDetails.price} x {item.cartItems.quantity}</p>
                 </div>
               </div>
               <div >
                 <p  >
-                  ${item.price * item.count}
+                  ${item.productDetails.price * item.cartItems.quantity}
                 </p>
 
               </div>
@@ -253,12 +253,12 @@ export default function CreateOrder() {
                   <div className="flex">
 
                     <div className="s-order-name" style={{margin: '0px'}} >
-                      <p style={{margin: '0px'}}>{item.name} x {item.count}</p>
+                      <p style={{margin: '0px'}}>{item.productDetails.name} x {item.cartItems.quantity}</p>
                     </div>
                   </div>
                   <div >
                     <p style={{margin: '10px'}} >
-                      ${item.price * item.count}
+                      ${item.productDetails.price * item.cartItems.quantity}
                     </p>
 
                   </div>
