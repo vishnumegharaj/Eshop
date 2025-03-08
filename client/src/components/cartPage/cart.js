@@ -139,8 +139,7 @@ export default function Cart() {
                             {cart?.length > 0 ? (
                                 <CartItems />
                             ) : (
-                                <CartItems />
-                                // <EmptyCart />
+                                <EmptyCart />
 
                             )}
                         </div>
