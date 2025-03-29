@@ -46,7 +46,7 @@ export default function SignUp() {
     return (
         <div className="auth-container">
             <div className="signup-component">
-                <h1>Sign Up</h1>
+            <h2 className="m-6 text-center text-2xl font-bold text-gray-900">Create your account</h2>
 
                 <form className="form" onSubmit={onFormSubmit}>
                     <label htmlFor="name" className="text">Username:</label>
@@ -64,7 +64,7 @@ export default function SignUp() {
                     <label htmlFor="number" className="text">Contact Number: </label>
                     <input type="text" className="inputField" placeholder="Enter your Contact Number" onChange={(e) => setContactNumber(e.target.value)} required />
 
-                    <button className="btn"  >Sign Up</button>
+                    <button className="btnn"  >Sign Up</button>
                 </form>
 
             </div>

@@ -1,10 +1,10 @@
 const Cart = require('../models/cart.models');
+const Products = require('../models/products.models');
 const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
 async function addToCart(req, res) {
-    console.log("req", req.body);
     const { productId, price } = req.body;
 
     const token = req.header('Authorization');
@@ -86,8 +86,6 @@ async function getCartByUserId(req, res) {
         },
         { $unwind: "$productDetails" } // Flatten the productDetails array
     ]);
-
-    console.log("cart", cart);
     if (!cart) {
         return res.status(404).json({ message: 'Cart not found' });
     }
@@ -112,7 +110,6 @@ async function deleteFromCart(req, res) {
         const productIdObj = new mongoose.Types.ObjectId(productId);
 
         const cart = await Cart.findOne({ userId });
-        console.log("cart in delete", cart);
 
         if (!cart) {
             return res.status(400).json({ message: 'Cart not found' });
@@ -141,9 +138,72 @@ async function deleteFromCart(req, res) {
     }
 }
 
+async function increaseCount(req, res) {
+    const { productId } = req.body;
+    console.log(productId);
+    const token = req.header('Authorization');
+    if (!token) {
+        console.log("unauthorised");
+        return res.status(401).send("Unauthorized, please login first");
+    }
+    const decodedToken = jwt.verify(token, '12345');
+    const userId = decodedToken._id;
+
+    const cart = await Cart.findOne({ userId });
+    const product = await Products.findById(productId);
+    console.log("product", product);
+    if (!cart) {
+        return res.status(400).json({ message: 'Cart not found' });
+    }
+
+
+    const itemIndex = cart.cartItems.findIndex(c => c.productId.toString() === productId);
+    if(cart.cartItems[itemIndex].quantity >= product.availableItems){
+        console.log("inside Product quantity exceeds")
+        return res.status(200).json({ message: 'Product quantity exceeds available items' });
+    }
+    if (itemIndex > -1) {
+        cart.cartItems[itemIndex].quantity += 1;
+        await cart.save();
+        return res.status(200).json({ message: 'Cart updated' });
+    } else {
+        return res.status(400).json({ message: 'Product not found in cart' });
+    }
+}
+async function decreaseCount(req, res) {
+    const { productId } = req.body;
+    const token = req.header('Authorization');
+    if (!token) {
+        console.log("unauthorised");
+        return res.status(401).send("Unauthorized, please login first");
+    }
+    const decodedToken = jwt.verify(token, '12345');
+    const userId = decodedToken._id;
+
+    const cart = await Cart.findOne({ userId });
+    if (!cart) {
+        return res.status(400).json({ message: 'Cart not found' });
+    }
+
+    const itemIndex = cart.cartItems.findIndex(c => c.productId.toString() === productId);
+    if (itemIndex > -1) {
+        if (cart.cartItems[itemIndex].quantity > 1) {
+            cart.cartItems[itemIndex].quantity -= 1;
+            await cart.save();
+            return res.status(200).json({ message: 'Cart updated' });
+        } else {
+            return res.status(400).json({ message: 'Quantity cannot be less than 1' });
+        }
+    } else {
+        return res.status(400).json({ message: 'Product not found in cart' });
+    }
+}
+
 module.exports = {
     addToCart,
     updateCart,
     getCartByUserId,
-    deleteFromCart
+    deleteFromCart,
+    decreaseCount,
+    increaseCount
 }

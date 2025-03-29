@@ -9,8 +9,6 @@
     top: 0;
     left: 0;
     right: 0;
-    background:linear-gradient(to right, var(--primary-color), var(--secondary-color));; 
-    
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -21,7 +19,7 @@
 }
 
 .logo {
-    color: #E4E4E4;
+    color: var(--primary-color);
     font-size: 34px;
     font-weight: bold;
     font-family: "Teko", sans-serif;
@@ -33,12 +31,12 @@
     justify-content: center;
 }
 
-.button {
-    background-color: var(--primary-color); /* Changed background to a solid color */
+.buttonn {
+     /* Changed background to a solid color */
     text-align: center;
     margin: 5px;
     border: none;
-    color: white;
+    color: black;
     padding: 10px;
     font-size: 16px;
     font-weight: bold;

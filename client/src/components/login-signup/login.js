@@ -50,14 +50,14 @@ export default function Login() {
             }
             navigate('/Products');
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
         }
     }
 
     return (
         <div className="auth-container">
             <div className="signup-component">
-                <h1>Login</h1>
+            <h2 className="m-6 text-center text-2xl font-bold text-gray-900">Sign in to your account</h2>
 
                 <form className="form" onSubmit={onFormSubmit}>
                     <label htmlFor="email" className="text">Email:</label>
@@ -82,7 +82,7 @@ export default function Login() {
                         required
                     />
 
-                    <button className="btn">Login</button>
+                    <button className="btnn">Login</button>
                 </form>
             </div>
         </div>

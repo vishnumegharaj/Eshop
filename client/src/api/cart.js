@@ -75,4 +75,54 @@ async function removeFromCart(productId) {
     }
 }
 
-export { AddToCart , getCart, removeFromCart };
+async function increaseCountApi(productId) {
+    const API = process.env.REACT_APP_API;
+    try {
+        const token = localStorage.getItem('accessToken');
+        const response = await fetch(API + "/api/cart/increaseCount", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({
+                productId: productId
+            })
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Increased count: ", data);
+        return data;
+    } catch (error) {
+        console.error("Failed to increase count: ", error);
+    }
+}
+
+async function decreaseCountApi(productId) {
+    const API = process.env.REACT_APP_API;
+    try {
+        const token = localStorage.getItem('accessToken');
+        const response = await fetch(API + "/api/cart/decreaseCount", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({
+                productId: productId
+            })
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Decreased count: ", data);
+        return data;
+    } catch (error) {
+        console.error("Failed to decrease count: ", error);
+    }
+}   
+
+export { AddToCart , getCart, removeFromCart,increaseCountApi, decreaseCountApi };

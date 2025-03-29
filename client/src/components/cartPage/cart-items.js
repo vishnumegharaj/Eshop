@@ -1,45 +1,65 @@
-
-import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Minus, Plus, Trash2 } from "lucide-react"
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { use } from "react";
 import { toast } from "react-hot-toast";
 
-import { removeFromCart } from "../../api/cart";
+import { removeFromCart, increaseCountApi, decreaseCountApi } from "../../api/cart";
 import { loadState } from "./localstorage";
 
 export default function CartItems() {
   const dispatch = useDispatch();
-  // In your CartItems component
-  const cart = useSelector((state) => {
-    console.log("Full Redux state:", state); // Log the entire state to see its structure
-    return state?.cart || [];
-  });
-  useEffect(() => {
-    console.log("cart in cartitems", cart);
-  }, [cart]);
+  const cart = useSelector((state) => state?.cart || []);
+  const [loadingItemId, setLoadingItemId] = useState(null); // Track the loading state for each item
 
   async function handleDelete(productId) {
-    console.log("Deleting item from cart", productId);
     try {
       await removeFromCart(productId);
-      loadState().then(loadedState => {
-        if (loadedState) {
-          // Dispatch an action to set the loaded state
-          dispatch({
-            type: 'INITIALIZE_CART',
-            payload: loadedState
-          });
-        }
-      });
+      const loadedState = await loadState();
+      if (loadedState) {
+        dispatch({ type: "INITIALIZE_CART", payload: loadedState });
+      }
       toast.success("Item removed from cart");
     } catch (error) {
-      console.error("Failed to remove item from cart", error);
       toast.error("Failed to remove item from cart");
     }
   }
 
+  async function handleDecrease(productId) {
+    setLoadingItemId(productId);
+    try {
+      await decreaseCountApi(productId);
+      const loadedState = await loadState();
+      if (loadedState) {
+        dispatch({ type: "INITIALIZE_CART", payload: loadedState });
+      }
+      toast.success("Item count decreased");
+    } catch (error) {
+      toast.error("Failed to decrease item count, Try again!");
+    } finally {
+      setLoadingItemId(null);
+    }
+  }
+
+  async function handleIncrease(productId) {
+    setLoadingItemId(productId);
+    try {
+      const response = await increaseCountApi(productId);
+      if (response.message === "Product quantity exceeds available items") {
+        toast.error("Maximum stock limit reached!");
+        return;
+      }
+      const loadedState = await loadState();
+      if (loadedState) {
+        dispatch({ type: "INITIALIZE_CART", payload: loadedState });
+      }
+      toast.success("Item count increased");
+    } catch (error) {
+      toast.error("Something went wrong, Try again!");
+    } finally {
+      setLoadingItemId(null);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -54,6 +74,7 @@ export default function CartItems() {
           >
             <div className="overflow-hidden">
               <div className="group relative flex flex-col p-5 sm:flex-row sm:items-center bg-white border border-gray-200 shadow-sm rounded-2xl transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+
                 {/* Product Image */}
                 <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 shadow-sm">
                   <img
@@ -72,15 +93,41 @@ export default function CartItems() {
 
                   {/* Quantity Controls & Remove Button */}
                   <div className="mt-5 flex items-center justify-between">
-                    {/* Redesigned Quantity Control */}
-                    <div className="flex items-center gap-0">
-                      <button className="h-8 w-8 flex items-center justify-center rounded-full  bg-white text-indigo-600 hover:bg-indigo-100 transition">
-                        <Minus className="h-5 w-5" />
-                      </button>
-                      <span className="text-lg font-semibold text-gray-900 w-10 text-center">{item.cartItems.quantity}</span>
-                      <button className="h-8 w-8 flex items-center justify-center rounded-full bg-white text-indigo-600 hover:bg-indigo-100 transition">
-                        <Plus className="h-5 w-5" />
-                      </button>
+
+                    {/* Quantity Control */}
+                    <div className="flex items-center justify-center relative gap-0">
+                      <div className={`${loadingItemId === item.productDetails._id ? "filter blur-[1px]" : ""} flex items-center relative gap-0`}>
+
+                        <button
+                          onClick={() => handleDecrease(item.productDetails._id)}
+                          className="h-8 w-8 flex items-center justify-center rounded-full bg-white text-indigo-600 hover:bg-indigo-100 transition"
+                          disabled={loadingItemId === item.productDetails._id}
+                        >
+                          <Minus className="h-5 w-5" />
+                        </button>
+
+                        {/* Loader or Count */}
+
+                        <span className="text-lg font-semibold text-gray-900 w-10 text-center">{item.cartItems.quantity}</span>
+
+
+                        <button
+                          onClick={() => handleIncrease(item.productDetails._id)}
+                          className="h-8 w-8 flex items-center justify-center rounded-full bg-white text-indigo-600 hover:bg-indigo-100 transition"
+                          disabled={loadingItemId === item.productDetails._id}
+                        >
+                          <Plus className="h-5 w-5" />
+                        </button>
+                      </div>
+
+                      {loadingItemId === item.productDetails._id ? (
+                        <div className="absolute z-50  flex flex-row items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-blue-700 animate-bounce"></div>
+                          <div className="w-2 h-2 rounded-full bg-blue-700 animate-bounce [animation-delay:.2s]"></div>
+                          <div className="w-2 h-2 rounded-full bg-blue-700 animate-bounce [animation-delay:.4s]"></div>
+                        </div>
+                      ) : null}
+
                     </div>
 
                     {/* Remove Item Button */}
@@ -99,5 +146,5 @@ export default function CartItems() {
         ))}
       </AnimatePresence>
     </div>
-  )
+  );
 }

@@ -132,7 +132,7 @@ export default function Products() {
                 {showCategories ? <>Hide Categories <FaChevronUp /></> : <>Filter Categories <FaChevronDown /></>}
             </button>
 
-            <div className="flex flex-wrap items-center justify-center gap-2 my-5">
+            <div className="flex flex-wrap items-center gap-2 my-5">
                 {showCategories && (
                     <>
                         <button className={`py-2 px-4 rounded ${alignment === 'All' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-black'}`} onClick={() => handleAlignment('All')}>All</button>
