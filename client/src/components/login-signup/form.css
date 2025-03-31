@@ -31,7 +31,7 @@
 .auth-container{
     height: 93vh;
     display: flex;
-    background-color: #e4e4e4;
+    background-color: #eef2ff;
     align-items: center;
     justify-content: center;
 }
@@ -43,10 +43,12 @@
     justify-content: center;
     margin:   auto;
     height: auto;
-    padding: 16px;
+    padding: 10px;
+    padding-bottom: 30px;
     width: 400px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 16px;
+    border: 1px solid #ddd;
 }
 .signup-component h1{
     color: var(--primary-color);

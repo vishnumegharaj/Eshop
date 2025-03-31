@@ -20,6 +20,7 @@ export default function Products() {
     const [categories, setCategories] = useState([]);
     const [alignment, setAlignment] = useState('All');
     const [showCategories, setShowCategories] = useState(false);
+    const [loading, setLoading] = useState(false); // Loader state
     const API = process.env.REACT_APP_API;
 
     const token = localStorage.getItem('accessToken');
@@ -35,7 +36,8 @@ export default function Products() {
     };
 
     const loadProducts = async () => {
-        console.log("fetching product from server");
+        console.log("Fetching products from server");
+        setLoading(true); // Start loading
         try {
             const response = await fetch(API + "/api/products", {
                 method: 'GET',
@@ -52,11 +54,14 @@ export default function Products() {
 
         } catch (error) {
             console.error("Failed to fetch products: ", error);
+        } finally {
+            setLoading(false); // Stop loading
         }
     };
 
     const loadCategories = async () => {
-        console.log("fetching categories from server");
+        console.log("Fetching categories from server");
+        setLoading(true); // Start loading
         try {
             const response = await fetch(API + "/api/products/category", {
                 method: 'GET',
@@ -72,6 +77,8 @@ export default function Products() {
             setCategories(data);
         } catch (error) {
             console.error("Failed to fetch categories: ", error);
+        } finally {
+            setLoading(false); // Stop loading
         }
     };
 
@@ -103,6 +110,8 @@ export default function Products() {
 
     return (
         <div className=" p-10 bg-color">
+
+
             <div className="relative">
                 <div className="absolute inset-0">
                     <img
@@ -127,83 +136,92 @@ export default function Products() {
                 </div>
             </div>
 
-
-            <button className="bg-gray-200 text-black py-2 px-4 rounded mt-8 flex items-center justify-center gap-2" onClick={toggleCategories}>
-                {showCategories ? <>Hide Categories <FaChevronUp /></> : <>Filter Categories <FaChevronDown /></>}
-            </button>
-
-            <div className="flex flex-wrap items-center gap-2 my-5">
-                {showCategories && (
-                    <>
-                        <button className={`py-2 px-4 rounded ${alignment === 'All' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-black'}`} onClick={() => handleAlignment('All')}>All</button>
-                        {categories.map(category => (
-                            <button key={category} className={`py-2 px-4 rounded ${alignment === category ? 'bg-purple-500 text-white' : 'bg-gray-200 text-black'}`} onClick={() => handleAlignment(category)}>
-                                {category}
-                            </button>
-                        ))}
-                    </>
-                )}
-            </div>
-
-            {/* Featured Products */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Products</h2>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 bg-color">
-                    {products.map((product) => {
-                        if (alignment === 'All' || product.category === alignment) {
-                            return (
-                                <>
-                                    <div
-                                        key={product.id}
-                                        // onClick={() => handleCardClickEvent(product._id)}
-                                        className="bg-white border rounded-lg  overflow-hidden"
-                                    >
-                                        <img
-                                            src={product.imageURL}
-                                            alt={product.name}
-                                            style={{ height: 300, objectFit: 'contain' }}
-                                            className="w-full h-min object-cover"
-                                        />
-                                        <div className="p-6">
-                                            <span className="inline-block px-2 py-1 mb-2 text-sm font-medium text-secondary bg-indigo-100  rounded-full">
-                                                {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
-                                            </span>
-                                            <h3 class="text-xl font-semibold leading-tight text-gray-900">{product.name}</h3>
-
-                                            {/* <div className="flex items-center mt-2">
-                                             {[...Array(5)].map((_, i) => (
-                                                 <FaStar
-                                                     key={i}
-                                                     className={`${i < Math.floor(product.rating) ? "text-yellow-400" : "text-gray-300"} w-5 h-5`}
-                                                  />
-                                             ))}
-                                               <span className="ml-2 text-gray-600 dark:text-gray-300">{product.rating}</span>
-                                                  </div> */}
-                                            <div className=" w-full">
-                                                <p className="text-2xl font-extrabold leading-tight text-gray-900 block">${product.price}</p>
-                                                <button
-                                                    onClick={() => handleAddToCart(product._id, product.price)}
-                                                    type="button"
-                                                    className="mt-2 w-full max-w-[100%] inline-flex items-center justify-center rounded-lg btn px-5 py-2.5 text-sm font-medium text-white transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-secondary"
-                                                >
-                                                    <svg className="h-5 w-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-                                                    </svg>
-                                                    {cart?.some((item) => item?.productDetails?._id == product._id) ? "Added to Cart" : "Add to cart"}
-                                                    {console.log("product", product._id)}
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            );
-                        }
-                    })}
+            {loading ? (
+                // Loader
+                <div className="flex justify-center items-center h-screen">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-700"></div>
                 </div>
-            </div>
+            ) : (
+                <>
 
+                    <button className="bg-gray-200 text-black py-2 px-4 rounded mt-8 flex items-center justify-center gap-2" onClick={toggleCategories}>
+                        {showCategories ? <>Hide Categories <FaChevronUp /></> : <>Filter Categories <FaChevronDown /></>}
+                    </button>
 
+                    <div className="flex flex-wrap items-center gap-2 my-5">
+                        {showCategories && (
+                            <>
+                                <button className={`py-2 px-4 rounded ${alignment === 'All' ? 'bg-purple-500 text-white' : 'bg-gray-200 text-black'}`} onClick={() => handleAlignment('All')}>All</button>
+                                {categories.map(category => (
+                                    <button key={category} className={`py-2 px-4 rounded ${alignment === category ? 'bg-purple-500 text-white' : 'bg-gray-200 text-black'}`} onClick={() => handleAlignment(category)}>
+                                        {category}
+                                    </button>
+                                ))}
+                            </>
+                        )}
+                    </div>
+
+                    {/* Featured Products */}
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Products</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 bg-color">
+                            {products.map((product) => {
+                                if (alignment === 'All' || product.category === alignment) {
+                                    return (
+                                        <>
+                                            <div
+                                                key={product.id}
+                                                // onClick={() => handleCardClickEvent(product._id)}
+                                                className="bg-white border rounded-lg  overflow-hidden"
+                                            >
+                                                <img
+                                                    src={product.imageURL}
+                                                    alt={product.name}
+                                                    style={{ height: 300, objectFit: 'contain' }}
+                                                    className="w-full h-min object-cover"
+                                                />
+                                                <div className="p-6">
+                                                    <span className="inline-block px-2 py-1 mb-2 text-sm font-medium text-secondary bg-indigo-100  rounded-full">
+                                                        {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+                                                    </span>
+                                                    <h3 class="text-xl font-semibold leading-tight text-gray-900">{product.name}</h3>
+
+                                                    {/* <div className="flex items-center mt-2">
+                                                     {[...Array(5)].map((_, i) => (
+                                                         <FaStar
+                                                             key={i}
+                                                             className={`${i < Math.floor(product.rating) ? "text-yellow-400" : "text-gray-300"} w-5 h-5`}
+                                                          />
+                                                     ))}
+                                                       <span className="ml-2 text-gray-600 dark:text-gray-300">{product.rating}</span>
+                                                          </div> */}
+                                                    <div className=" w-full">
+                                                        <p className="text-2xl font-extrabold leading-tight text-gray-900 block">${product.price}</p>
+                                                        <button
+                                                            onClick={() => handleAddToCart(product._id, product.price)}
+                                                            type="button"
+                                                            className="mt-2 w-full max-w-[100%] inline-flex items-center justify-center rounded-lg btn px-5 py-2.5 text-sm font-medium text-white transform hover:scale-105 transition duration-300 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 hover:bg-secondary"
+                                                        >
+                                                            <svg className="h-5 w-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                                                            </svg>
+                                                            {cart?.some((item) => item?.productDetails?._id == product._id) ? "Added to Cart" : "Add to cart"}
+                                                            {console.log("product", product._id)}
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
